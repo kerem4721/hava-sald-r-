@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hava Saldırısı Uyarısı</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            overflow: hidden;
+            padding: 20px;
+            animation: flashBackground 1.5s infinite alternate; /* Animasyon hızı ayarlandı */
+        }
+
+        @keyframes flashBackground {
+            0% { background-color: black; }
+            100% { background-color: darkred; }
+        }
+
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+            text-align: center;
+            max-width: 600px;
+            font-weight: bold;
+        }
+
+        /* Erişilebilirlik için eklenen stil */
+        ul li {
+            margin-bottom: 10px; /* Liste öğeleri arasına boşluk eklendi */
+        }
+    </style>
+</head>
+<body>
+    <audio id="alertAudio" loop>
+        <source src="alert.mp3" type="audio/mpeg">
+        <source src="alert.ogg" type="audio/ogg">
+        <source src="alert.wav" type="audio/wav">
+        Tarayıcınız ses dosyasını desteklemiyor.
+    </audio>
+    <div class="content">
+        <h1>⚠️ HAVA SALDIRISI UYARISI ⚠️</h1>
+        <p>Mardin'de hava saldırısı tehlikesi nedeniyle acil önlemler alınması gerekmektedir.</p>
+        <h3>Alınması Gereken Önlemler:</h3>
+        <ul>
+            <li><strong>Sığınağa Geçin:</strong> En yakın sığınak veya güvenli kapalı bir alana hızla geçin. Pencereleri ve kapıları kapatın.</li>
+            <li><strong>Elektrik ve Gazı Kapatın:</strong> Doğalgaz ve elektriği kapatın, yanan ocakları ve sobayı söndürün.</li>
+            <li><strong>Haberleşmeyi Takip Edin:</strong> Yetkililerin duyurularını radyo, televizyon veya güvenilir kaynaklardan takip edin.</li>
+            <li><strong>Paniğe Kapılmayın:</strong> Soğukkanlı olun ve çevrenizdekilere yardımcı olun.</li>
+        </ul>
+        <p>Tehlikenin geçtiğine dair yetkililerden uyarı alana kadar güvenli alanlarda kalın.</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var audio = document.getElementById('alertAudio');
+            var played = false; // Sesin çalınıp çalınmadığını takip etmek için
+
+            function playAudio() {
+                if (played) return; // Ses zaten çaldıysa tekrar çalma
+
+                audio.play().then(function() {
+                    played = true; // Ses başarıyla çalındı
+                    console.log("Ses çalmaya başladı.");
+                }).catch(function(error) {
+                    console.error("Otomatik oynatma engellendi:", error);
+                    // Kullanıcıya bir buton gösterme veya başka bir etkileşim isteme seçeneği (örneğin, bir butona tıklayarak sesi başlatma)
+                });
+            }
+
+            // Kullanıcının ilk etkileşimini bekle
+            document.addEventListener('click', playAudio);
+            document.addEventListener('touchstart', playAudio); // Mobil cihazlar için
+
+            // (İsteğe Bağlı) Sayfa yüklendiğinde hemen oynatmayı dene
+            playAudio();
+        });
+    </script>
+</body>
+</html>
